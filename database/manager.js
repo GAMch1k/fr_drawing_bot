@@ -5,21 +5,21 @@ require('dotenv').config();
 const uri = process.env.DB_STRING;
 
 const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
 });
 
 async function test() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    await client.close();
-  }
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } finally {
+        await client.close();
+    }
 }
 
 test().catch(console.dir);
@@ -47,8 +47,8 @@ class DBConnector {
     }
 
     async readAll(query, params) {
-        let res = await this.collection.find(query, params);
-
+        let cur = await this.collection.find(params, query);
+        let res = await cur.toArray();
         this.close();
         return res;
     }
@@ -88,9 +88,9 @@ async function isUserExists(userId) {
     return await getUser(userId) != null;
 }
 
-async function newUser(userId, name) {
+async function newUser(userId, name, username) {
     const db = new DBConnector("users");
-    await db.insert({userId: userId, name: name, position: "choose_lang"});
+    await db.insert({userId: userId, name: name, username: username, tickets: 0, position: "choose_lang"});
 }
 
 async function updateUserLang(userId, language) {
@@ -98,10 +98,28 @@ async function updateUserLang(userId, language) {
     await db.update({$set: {language: language}}, {userId: userId});
 }
 
+async function updateUserPosition(userId, position) {
+    const db = new DBConnector("users");
+    await db.update({$set: {position: position}}, {userId: userId});
+}
+
+async function updateUserWallet(userId, wallet) {
+    const db = new DBConnector("users");
+    await db.update({$set: {wallet: wallet}}, {userId: userId});
+}
+
+async function getTop10Users() {
+    const db = new DBConnector("users");
+    return await db.readAll({sort: {tickets: -1}, limit: 10}, {});
+}
+
 
 module.exports = {
     getUser,
     isUserExists,
     newUser,
-    updateUserLang
+    updateUserLang,
+    updateUserPosition,
+    updateUserWallet,
+    getTop10Users
 } 
