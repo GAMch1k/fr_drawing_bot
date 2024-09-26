@@ -88,9 +88,9 @@ async function isUserExists(userId) {
     return await getUser(userId) != null;
 }
 
-async function newUser(userId, name, username) {
+async function newUser(userId, name, username, ref) {
     const db = new DBConnector("users");
-    await db.insert({userId: userId, name: name, username: username, tickets: 0, position: "choose_lang"});
+    await db.insert({userId: userId, name: name, username: username, tickets: 0, referal: ref, subscribed: false, position: "choose_lang"});
 }
 
 async function updateUserLang(userId, language) {
@@ -113,6 +113,16 @@ async function getTop10Users() {
     return await db.readAll({sort: {tickets: -1}, limit: 10}, {});
 }
 
+async function addTickets(userId) {
+    const db = new DBConnector("users");
+    await db.update({$inc: {tickets: 1}}, {userId: userId});
+}
+
+async function userSubscribed(userId) {
+    const db = new DBConnector("users");
+    await db.update({$set: {subscribed: true}}, {userId: userId});
+}
+
 
 module.exports = {
     getUser,
@@ -121,5 +131,7 @@ module.exports = {
     updateUserLang,
     updateUserPosition,
     updateUserWallet,
-    getTop10Users
+    getTop10Users,
+    addTickets,
+    userSubscribed
 } 

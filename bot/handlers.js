@@ -17,8 +17,22 @@ bot.on("message", async msg => {
         if (!await db.isUserExists(chatId)) {
             let name = utils.genName(msg); 
 
-            await db.newUser(chatId, name, username);
+            let ref = 0;
+            if (text.includes("ref_")) {
+                ref = parseInt(text.split("_")[1]);
+            }
+            
+            await db.newUser(chatId, name, username, ref);
+
             answer.chooseLanguage(chatId);
+            return;
+        }
+        if (!user.subscribed) {
+            if (user.language) {
+                await answer.subToChanel(chatId, user.language);
+            } else {
+                answer.chooseLanguage(chatId);
+            }
             return;
         }
         await answer.mainMenu(chatId, user.language);
@@ -56,6 +70,8 @@ bot.on("callback_query", async query => {
         
         if (_user.status == "member") {
             await bot.deleteMessage(chatId, query.message.message_id);
+            await db.userSubscribed(chatId);
+            db.addTickets(user.referal)
             await answer.conditions(chatId, user.language);
         } else {
             res_message = ph.not_subscribed[user.language]

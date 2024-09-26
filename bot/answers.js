@@ -26,7 +26,7 @@ async function enterTRXWallet(chatId, lang) {
 }
 
 async function readyConditions(chatId, lang, tickets) {
-    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start='+chatId), keyboard.ready_to_menu);
+    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.ready_to_menu);
 }
 
 async function mainMenu(chatId, lang) {
@@ -39,7 +39,7 @@ async function conditions2(chatId, lang) {
 }
 
 async function stats(chatId, lang, tickets) {
-    await bot.sendMessage(chatId, ph.stats[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start='+chatId), keyboard.main_menu(lang));
+    await bot.sendMessage(chatId, ph.stats[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.main_menu(lang));
 }
 
 async function top10(chatId, lang) {
@@ -53,6 +53,10 @@ async function top10(chatId, lang) {
 
 async function buyPct(chatId, lang, tickets) {
     await bot.sendMessage(chatId, ph.buy_pct[lang], keyboard.main_menu(lang));
+}
+
+async function failedReferal(chatId, lang) {
+    await bot.sendMessage(chatId, ph.failed_referal[lang]);
 }
 
 
@@ -72,5 +76,6 @@ module.exports = {
     conditions2,
     stats,
     top10,
-    buyPct
+    buyPct,
+    failedReferal
 }

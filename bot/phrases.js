@@ -67,6 +67,12 @@ module.exports = {
         "ru": "Купить $PCT\n\nhttps://peacytron.com/"
     },
 
+    failed_referal: {
+        "en": "Failed to add referral",
+        "ua": "Не вдалося додати реферал",
+        "ru": "Не удалось добавить реферала"
+    },
+
 
 
 
