@@ -35,7 +35,7 @@ async function checkTRXWallet(chatId, lang, wallet) {
 }
 
 async function readyConditions(chatId, lang, tickets) {
-    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.ready_to_menu);
+    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.ready_to_menu(lang));
 }
 
 async function mainMenu(chatId, lang) {

@@ -117,17 +117,19 @@ module.exports = {
         }
     },
 
-    ready_to_menu: {
-        "reply_markup": {
-            "resize_keyboard": true,
-            "inline_keyboard": [
-                [
-                    {
-                        "text": "Next/Далі/Далее",
-                        "callback_data": "main_menu"
-                    }
+    ready_to_menu(lang) {
+        return {
+            "reply_markup": {
+                "resize_keyboard": true,
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": ph.next_btn[lang],
+                            "callback_data": "main_menu"
+                        }
+                    ]
                 ]
-            ]
+            }
         }
     },
 
