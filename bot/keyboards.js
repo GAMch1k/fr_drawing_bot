@@ -78,7 +78,7 @@ module.exports = {
                 [
                     {
                         "text": ph.sub_to_chanel_btn[lang],
-                        "url": "https://t.me/test_for_freelance_ch_2" // https://t.me/peacytron
+                        "url": "https://t.me/peacytron" // https://t.me/peacytron
                     }
                 ],
                 [

@@ -66,7 +66,7 @@ bot.on("callback_query", async query => {
     }
     
     else if (data == 'check_sub') {
-        let _user = await bot.getChatMember("@test_for_freelance_ch_2", chatId);
+        let _user = await bot.getChatMember("@peacytron", chatId);
         
         if (_user.status == "member") {
             await bot.deleteMessage(chatId, query.message.message_id);
