@@ -41,7 +41,8 @@ bot.on("message", async msg => {
 
     if (user.position == "enter_trx") {
         await db.updateUserWallet(chatId, text);
-        await answer.readyConditions(chatId, user.language, user.tickets);
+        await answer.checkTRXWallet(chatId, user.language, text);
+        await db.updateUserPosition(chatId, "_");
         return;
     }
     await answer.wrongCommand(chatId);
@@ -55,9 +56,8 @@ bot.on("callback_query", async query => {
     let res_message = ""
     const user = await db.getUser(chatId);
 
-    if (data.includes("lang")) {
+    if (data.includes("lang_")) {
         const lang = data.split("_")[1];
-        console.log(lang);
         await db.updateUserLang(chatId, lang);
         await bot.deleteMessage(chatId, query.message.message_id);
         await answer.languageSet(chatId, lang);
@@ -108,6 +108,31 @@ bot.on("callback_query", async query => {
     else if (data == 'main_menu_buy_pct') {
         await bot.deleteMessage(chatId, query.message.message_id);
         await answer.buyPct(chatId, user.language, user.tickets);
+    }
+
+    else if (data == 'main_menu_change_language') {
+        await bot.deleteMessage(chatId, query.message.message_id);
+        await answer.chooseLanguageMainMenu(chatId);
+    }
+
+    else if (data.includes("langmm_")) {
+        const lang = data.split("_")[1];
+        await db.updateUserLang(chatId, lang);
+        await bot.deleteMessage(chatId, query.message.message_id);
+        await answer.languageSet(chatId, lang);
+        
+        await answer.mainMenu(chatId, lang);
+    }
+
+    else if (data == 'trx_approve') {
+        await bot.deleteMessage(chatId, query.message.message_id);
+        await answer.readyConditions(chatId, user.language, user.tickets);
+    }
+
+    else if (data == 'trx_edit') {
+        await bot.deleteMessage(chatId, query.message.message_id);
+        await answer.enterTRXWallet(chatId, user.language);
+        await db.updateUserPosition(chatId, "enter_trx");
     }
 
 

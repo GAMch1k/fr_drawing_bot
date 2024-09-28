@@ -90,7 +90,7 @@ async function isUserExists(userId) {
 
 async function newUser(userId, name, username, ref) {
     const db = new DBConnector("users");
-    await db.insert({userId: userId, name: name, username: username, tickets: 0, referal: ref, subscribed: false, position: "choose_lang"});
+    await db.insert({userId: userId, name: name, username: username, tickets: 1, referal: ref, subscribed: false, position: "choose_lang"});
 }
 
 async function updateUserLang(userId, language) {
