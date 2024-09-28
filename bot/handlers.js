@@ -71,7 +71,11 @@ bot.on("callback_query", async query => {
         if (_user.status == "member") {
             await bot.deleteMessage(chatId, query.message.message_id);
             await db.userSubscribed(chatId);
-            db.addTickets(user.referal)
+            db.addTickets(user.referal);
+
+            let referal = await db.getUser(user.referal);
+            console.log(referal)
+            await answer.newReferal(referal.userId, user.name, referal.language)
             await answer.conditions(chatId, user.language);
         } else {
             res_message = ph.not_subscribed[user.language]

@@ -68,6 +68,10 @@ async function failedReferal(chatId, lang) {
     await bot.sendMessage(chatId, ph.failed_referal[lang]);
 }
 
+async function newReferal(chatId, name, lang) {
+    await bot.sendMessage(chatId, ph.new_referal[lang].replace('{ref_name}', name));
+}
+
 
 function wrongCommand(chatId) {
     bot.sendMessage(chatId, "Wrong command");
@@ -88,5 +92,6 @@ module.exports = {
     buyPct,
     failedReferal,
     chooseLanguageMainMenu,
-    checkTRXWallet
+    checkTRXWallet,
+    newReferal
 }
