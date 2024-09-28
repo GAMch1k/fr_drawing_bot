@@ -35,7 +35,7 @@ async function checkTRXWallet(chatId, lang, wallet) {
 }
 
 async function readyConditions(chatId, lang, tickets) {
-    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.ready_to_menu(lang));
+    await bot.sendMessage(chatId, ph.ready_conditions[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/PeacyTronGiveaway_Bot?start=ref_'+chatId), keyboard.ready_to_menu(lang));
 }
 
 async function mainMenu(chatId, lang) {
@@ -48,7 +48,7 @@ async function conditions2(chatId, lang) {
 }
 
 async function stats(chatId, lang, tickets) {
-    await bot.sendMessage(chatId, ph.stats[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/test_nmb_1bot?start=ref_'+chatId), keyboard.main_menu(lang));
+    await bot.sendMessage(chatId, ph.stats[lang].replace('{tick}', tickets).replace('{ref}', 'https://t.me/PeacyTronGiveaway_Bot?start=ref_'+chatId), keyboard.main_menu(lang));
 }
 
 async function top10(chatId, lang) {
